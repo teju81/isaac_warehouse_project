@@ -1,0 +1,149 @@
+# =============================================================================
+# Capture Scene Configuration
+# =============================================================================
+# Mirrors the Perception Super App (VR mode) config style.
+#
+# Usage:
+#   cd ~/isaac-sim/isaac-sim-standalone-5.1.0-linux-x86_64
+#   ./python.sh /path/to/capture_scene.py --config /path/to/capture_config.yaml
+#
+# Teleop (from ROS 2 container):
+#   export ROS_DOMAIN_ID=47
+#   ros2 launch teleop_twist_joy teleop-launch.py joy_vel:=/explorer/cmd_vel
+# =============================================================================
+
+# --- Scene ---
+scene:
+  warehouse: full_warehouse    # warehouse, full_warehouse, warehouse_with_forklifts, warehouse_multiple_shelves
+
+  # Additional objects to populate the scene
+  # Each object: usd_path (relative to assets root), prim name, position [x,y,z], orientation [rx,ry,rz] degrees
+  objects:
+    # Pallets
+    - usd_path: /Isaac/Props/Pallet/pallet.usd
+      prim_name: pallet_01
+      position: [3.0, 1.0, 0.0]
+      orientation: [0, 0, 0]
+    - usd_path: /Isaac/Props/Pallet/pallet.usd
+      prim_name: pallet_02
+      position: [3.0, 3.0, 0.0]
+      orientation: [0, 0, 45]
+    - usd_path: /Isaac/Props/Pallet/pallet.usd
+      prim_name: pallet_03
+      position: [-2.0, 5.0, 0.0]
+      orientation: [0, 0, 90]
+
+    # KLT bins on pallets
+    - usd_path: /Isaac/Props/KLT_Bin/small_KLT.usd
+      prim_name: klt_bin_01
+      position: [3.0, 1.0, 0.2]
+      orientation: [0, 0, 0]
+    - usd_path: /Isaac/Props/KLT_Bin/small_KLT.usd
+      prim_name: klt_bin_02
+      position: [3.2, 1.0, 0.2]
+      orientation: [0, 0, 0]
+    - usd_path: /Isaac/Props/KLT_Bin/small_KLT.usd
+      prim_name: klt_bin_03
+      position: [3.0, 3.0, 0.2]
+      orientation: [0, 0, 30]
+
+    # Dolly
+    - usd_path: /Isaac/Props/Dolly/dolly.usd
+      prim_name: dolly_01
+      position: [-3.0, 0.0, 0.0]
+      orientation: [0, 0, 0]
+
+    # YCB objects (scattered on shelves / floor)
+    - usd_path: /Isaac/Props/YCB/Axis_Aligned_Physics/003_cracker_box.usd
+      prim_name: cracker_box
+      position: [1.0, -1.0, 0.8]
+      orientation: [0, 0, 0]
+    - usd_path: /Isaac/Props/YCB/Axis_Aligned_Physics/004_sugar_box.usd
+      prim_name: sugar_box
+      position: [1.2, -1.0, 0.8]
+      orientation: [0, 0, 15]
+    - usd_path: /Isaac/Props/YCB/Axis_Aligned_Physics/005_tomato_soup_can.usd
+      prim_name: soup_can
+      position: [1.4, -1.0, 0.8]
+      orientation: [0, 0, 0]
+    - usd_path: /Isaac/Props/YCB/Axis_Aligned_Physics/006_mustard_bottle.usd
+      prim_name: mustard_bottle
+      position: [1.6, -1.0, 0.8]
+      orientation: [0, 0, -20]
+
+    # Mugs
+    - usd_path: /Isaac/Props/Mugs/SM_Mug_A2.usd
+      prim_name: mug_01
+      position: [2.0, -2.0, 0.8]
+      orientation: [0, 0, 0]
+    - usd_path: /Isaac/Props/Mugs/SM_Mug_B1.usd
+      prim_name: mug_02
+      position: [2.2, -2.0, 0.8]
+      orientation: [0, 0, 45]
+
+    # Colored blocks
+    - usd_path: /Isaac/Props/Blocks/red_block.usd
+      prim_name: red_block
+      position: [0.0, 2.0, 0.8]
+      orientation: [0, 0, 0]
+    - usd_path: /Isaac/Props/Blocks/blue_block.usd
+      prim_name: blue_block
+      position: [0.2, 2.0, 0.8]
+      orientation: [0, 0, 0]
+    - usd_path: /Isaac/Props/Blocks/green_block.usd
+      prim_name: green_block
+      position: [0.4, 2.0, 0.8]
+      orientation: [0, 0, 0]
+    - usd_path: /Isaac/Props/Blocks/yellow_block.usd
+      prim_name: yellow_block
+      position: [0.6, 2.0, 0.8]
+      orientation: [0, 0, 0]
+
+    # Cabinet
+    - usd_path: /Isaac/Props/Sektion_Cabinet/sektion_cabinet_visuals.usd
+      prim_name: cabinet_01
+      position: [-4.0, 3.0, 0.0]
+      orientation: [0, 0, 0]
+
+    # Forklift (parked)
+    - usd_path: /Isaac/Props/Forklift/forklift.usd
+      prim_name: forklift_01
+      position: [6.0, -3.0, 0.0]
+      orientation: [0, 0, 180]
+
+# --- Camera ---
+camera:
+  width: 1920
+  height: 1080
+  focal_length: 18.0          # mm (used to compute fx/fy from sensor aperture)
+  fx: null                    # pixels — null = auto from focal_length
+  fy: null
+  cx: null                    # pixels — null = width / 2
+  cy: null                    # pixels — null = height / 2
+  horizontal_aperture: 20.955 # mm (standard Isaac Sim default)
+  vertical_aperture: 15.2908  # mm
+  near_plane: 0.01            # meters
+  far_plane: 100.0            # meters
+  initial_pose:
+    tx: 0.0
+    ty: 0.0
+    tz: 3.0
+    roll: 0.0                 # degrees
+    pitch: 0.0
+    yaw: 0.0
+
+# --- Recording ---
+recording:
+  output_dir: /home/raviteja/captures/warehouse_001
+  subdir_color: color
+  subdir_depth: depth
+  capture_rate: 5.0           # Hz — frames captured per second
+  depth_format: both          # npy, png, or both
+  depth_scale: 1000           # for uint16 PNG: 1000 = millimeters
+
+# --- Teleop ---
+teleop:
+  namespace: explorer
+  domain_id: 47
+  max_speed: 3.0              # m/s
+  max_yaw_rate: 1.5           # rad/s
