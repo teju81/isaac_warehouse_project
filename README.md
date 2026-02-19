@@ -8,7 +8,6 @@
 *Note 1:* How to link assets folder to Isaac Sim
 Assuming the installation folder is ```~/isaac-sim/isaac-sim-standalone-5.1.0-linux-x86_64```
 Edit the file in ```apps/isaacsim.exp.base.kit``` 
-- Add the line ```"isaacsim.ros2.bridge" = {}``` after ```"isaacsim.sensors.rtx" = {}``` under the ```[dependencies]``` tag. This loads ros2 bridge by default when you launch isaac sim.
 - Add the text under the ```[settings]``` tag at the end
   ```
     persistent.isaac.asset_root.default = "/media/raviteja/Ubuntu_Data2/isaac-sim-assets/Assets/Isaac/5.1"
