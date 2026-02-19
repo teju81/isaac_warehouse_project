@@ -33,7 +33,15 @@ Edit the file in ```apps/isaacsim.exp.base.kit```
     export RMW_IMPLEMENTATION=rmw_fastrtps_cpp
     export FASTDDS_BUILTIN_TRANSPORTS=UDPv4
     export ROS_DOMAIN_ID=47
+
+    # Launch simulation
+
+    # Warehouse simulation
    ./python.sh ~/mycode/isaac_warehouse_project/spawn_warehouse.py
+
+    # OR VR Camera in Warehouse Simulation
+  ./python.sh ~/mycode/isaac_warehouse_project/capture_scene.py \
+    --config ~/mycode/isaac_warehouse_project/capture_config.yaml
   ```
 2. Joystick Teleop (Docker container)
 - Launch the ROS 2 Docker container [Terminal 1]
