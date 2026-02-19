@@ -134,12 +134,28 @@ camera:
 
 # --- Recording ---
 recording:
-  output_dir: /home/raviteja/captures/warehouse_001
+  output_dir: /home/raviteja/mycode/ubuntu_data/code_outputs/warehouse_001
   subdir_color: color
   subdir_depth: depth
   capture_rate: 5.0           # Hz — frames captured per second
   depth_format: both          # npy, png, or both
   depth_scale: 1000           # for uint16 PNG: 1000 = millimeters
+
+# --- Voxel Map Generation ---
+voxel_map:
+  output_dir: /home/raviteja/mycode/ubuntu_data/code_outputs/warehouse_001/voxel_map
+  resolution: 0.1              # Voxel edge length (meters)
+  height_range: [-0.5, 8.5]   # Z range to voxelize (meters)
+  padding: 0.5                 # Padding around scene bounds (meters)
+
+  # Output files (relative to output_dir unless absolute)
+  voxel_npz: voxel_map.npz     # 3D occupancy grid
+  mesh_ply: scene_mesh.ply      # Scene triangle mesh for Blender
+  voxel_ply: voxel_grid.ply     # Voxel point cloud for Blender
+
+  # Nav2 2D occupancy grid (null = skip)
+  nav2_map: map                 # Base name -> map.pgm + map.yaml
+  nav2_height_range: [0.0, 1.5] # Z range for 2D projection (robot height)
 
 # --- Teleop ---
 teleop:
