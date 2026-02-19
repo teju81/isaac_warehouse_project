@@ -11,18 +11,18 @@ Edit the file in ```apps/isaacsim.exp.base.kit```
 - Add the line ```"isaacsim.ros2.bridge" = {}``` after ```"isaacsim.sensors.rtx" = {}``` under the ```[dependencies]``` tag. This loads ros2 bridge by default when you launch isaac sim.
 - Add the text under the ```[settings]``` tag at the end
   ```
-  persistent.isaac.asset_root.default = "/media/raviteja/Ubuntu_Data2/isaac-sim-assets/Assets/Isaac/5.1"
+    persistent.isaac.asset_root.default = "/media/raviteja/Ubuntu_Data2/isaac-sim-assets/Assets/Isaac/5.1"
 
-exts."isaacsim.asset.browser".folders = [
-    "/media/raviteja/Ubuntu_Data2/isaac-sim-assets/Assets/Isaac/5.1/Isaac/Robots",
-    "/media/raviteja/Ubuntu_Data2/isaac-sim-assets/Assets/Isaac/5.1/Isaac/Environments",
-    "/media/raviteja/Ubuntu_Data2/isaac-sim-assets/Assets/Isaac/5.1/Isaac/Props",
-    "/media/raviteja/Ubuntu_Data2/isaac-sim-assets/Assets/Isaac/5.1/Isaac/Materials",
-    "/media/raviteja/Ubuntu_Data2/isaac-sim-assets/Assets/Isaac/5.1/Isaac/Sensors",
-    "/media/raviteja/Ubuntu_Data2/isaac-sim-assets/Assets/Isaac/5.1/Isaac/People",
-    "/media/raviteja/Ubuntu_Data2/isaac-sim-assets/Assets/Isaac/5.1/Isaac/IsaacLab",
-    "/media/raviteja/Ubuntu_Data2/isaac-sim-assets/Assets/Isaac/5.1/Isaac/Samples",
-]
-```
+    exts."isaacsim.asset.browser".folders = [
+        "/media/raviteja/Ubuntu_Data2/isaac-sim-assets/Assets/Isaac/5.1/Isaac/Robots",
+        "/media/raviteja/Ubuntu_Data2/isaac-sim-assets/Assets/Isaac/5.1/Isaac/Environments",
+        "/media/raviteja/Ubuntu_Data2/isaac-sim-assets/Assets/Isaac/5.1/Isaac/Props",
+        "/media/raviteja/Ubuntu_Data2/isaac-sim-assets/Assets/Isaac/5.1/Isaac/Materials",
+        "/media/raviteja/Ubuntu_Data2/isaac-sim-assets/Assets/Isaac/5.1/Isaac/Sensors",
+        "/media/raviteja/Ubuntu_Data2/isaac-sim-assets/Assets/Isaac/5.1/Isaac/People",
+        "/media/raviteja/Ubuntu_Data2/isaac-sim-assets/Assets/Isaac/5.1/Isaac/IsaacLab",
+        "/media/raviteja/Ubuntu_Data2/isaac-sim-assets/Assets/Isaac/5.1/Isaac/Samples",
+    ]
+  ```
   
 
