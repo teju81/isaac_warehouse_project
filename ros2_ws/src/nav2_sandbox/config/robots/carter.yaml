@@ -1,0 +1,34 @@
+# =============================================================================
+# Nova Carter — Robot Configuration for Nav2 Sandbox
+# =============================================================================
+# Wheeled differential-drive robot.
+# Uses front depth camera + depthimage_to_laserscan for obstacle detection.
+
+namespace: carter
+base_frame: chassis_link
+robot_radius: 0.30
+type: wheeled
+scan_source: depth_camera       # use front camera depth -> laserscan
+
+# Initial world pose — must match the spawn position in Isaac Sim's config.yaml
+# IsaacComputeOdometry reports position relative to start (0,0,0), so the
+# localization bridge uses this to set the map -> odom offset.
+initial_pose: [0.0, -2.0, 0.0]       # [x, y, yaw_radians]
+
+topics:
+  ground_truth_odom: /carter/ground_truth/odom
+  cmd_vel: /carter/cmd_vel
+  odom: /carter/odom
+  scan: /carter/scan            # output of depthimage_to_laserscan
+  depth_image: /carter/front_cam/depth
+  camera_info: /carter/front_cam/camera_info
+
+# Static TF for sensor frames (relative to base_frame)
+# These replace the Isaac Sim TF tree which has timestamp issues.
+sensor_frames:
+  - frame_id: front_2d_lidar
+    xyz: [0.0, 0.0, 0.245]
+  - frame_id: rear_lidar
+    xyz: [-0.364, 0.0, 0.228]
+  - frame_id: carter_front_cam
+    xyz: [0.3, 0.0, 0.15]

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  FastDDS 2.6 profile for Nav2 Sandbox (Isaac Sim on host, ROS2 in Docker).
+
+  Disables SHM transport by replacing builtin transports with UDPv4 only.
+  SHM causes CDR "sequence size exceeds remaining buffer" errors across
+  Docker container boundaries.
+
+  NOTE: FASTDDS_BUILTIN_TRANSPORTS env var does NOT work on FastDDS 2.6
+  (introduced in 2.9). This XML profile is the ONLY way to disable SHM.
+
+  Loaded via: export FASTRTPS_DEFAULT_PROFILES_FILE=<path_to_this_file>
+-->
+<profiles xmlns="http://www.eprosima.com/XMLSchemas/fastRTPS_Profiles">
+    <transport_descriptors>
+        <transport_descriptor>
+            <transport_id>udp_transport</transport_id>
+            <type>UDPv4</type>
+        </transport_descriptor>
+    </transport_descriptors>
+
+    <participant profile_name="participant_profile" is_default_profile="true">
+        <rtps>
+            <userTransports>
+                <transport_id>udp_transport</transport_id>
+            </userTransports>
+            <useBuiltinTransports>false</useBuiltinTransports>
+        </rtps>
+    </participant>
+</profiles>

@@ -1,0 +1,19 @@
+# =============================================================================
+# Unitree G1 — Robot Configuration for Nav2 Sandbox
+# =============================================================================
+# Legged humanoid robot with omnidirectional motion (can strafe).
+# No native 2D LiDAR — uses depthimage_to_laserscan on depth camera.
+
+namespace: g1
+base_frame: pelvis
+robot_radius: 0.30
+type: legged
+scan_source: depth_camera      # needs depthimage_to_laserscan
+
+topics:
+  ground_truth_odom: /g1/ground_truth/odom
+  cmd_vel: /g1/cmd_vel
+  odom: /g1/odom
+  scan: /g1/scan               # produced by depthimage_to_laserscan
+  depth_image: /g1/front_cam/depth
+  camera_info: /g1/front_cam/camera_info

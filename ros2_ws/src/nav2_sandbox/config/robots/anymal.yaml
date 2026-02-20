@@ -1,0 +1,19 @@
+# =============================================================================
+# ANYmal D — Robot Configuration for Nav2 Sandbox
+# =============================================================================
+# Legged quadruped robot (forward-only, no lateral motion).
+# No native 2D LiDAR — uses depthimage_to_laserscan on depth camera.
+
+namespace: anymal
+base_frame: base
+robot_radius: 0.35
+type: legged
+scan_source: depth_camera      # ANYmal has 3D lidar but no native 2D
+
+topics:
+  ground_truth_odom: /anymal/ground_truth/odom
+  cmd_vel: /anymal/cmd_vel
+  odom: /anymal/odom
+  scan: /anymal/scan
+  depth_image: /anymal/front_cam/depth
+  camera_info: /anymal/front_cam/camera_info

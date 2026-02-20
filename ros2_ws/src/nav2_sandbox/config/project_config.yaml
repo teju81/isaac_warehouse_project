@@ -1,0 +1,15 @@
+# =============================================================================
+# Nav2 Sandbox — Project Configuration
+# =============================================================================
+# Change 'robot' to switch between robots. Robot-specific settings
+# (namespace, frames, topics, nav2 params) are in config/robots/<name>.yaml
+# and config/nav2_<name>_params.yaml.
+#
+# Available robots: carter, g1, anymal
+
+robot: carter
+
+navigation:
+  use_sim_time: true
+  map_yaml: /root/mycode/isaac_warehouse_project/ros2_ws/src/nav2_sandbox/maps/map_auto.yaml
+  domain_id: 47
