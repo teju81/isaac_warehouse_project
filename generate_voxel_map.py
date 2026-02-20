@@ -13,7 +13,7 @@ Outputs (all paths from config):
 
 Usage:
     cd ~/isaac-sim/isaac-sim-standalone-5.1.0-linux-x86_64
-    ./python.sh /path/to/generate_voxel_map.py --config /path/to/capture_config.yaml --headless
+    ./python.sh /path/to/generate_voxel_map.py --config /path/to/config.yaml --headless
 """
 
 import argparse

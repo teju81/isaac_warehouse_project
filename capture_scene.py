@@ -15,7 +15,7 @@ Output structure:
 
 Usage:
     cd ~/isaac-sim/isaac-sim-standalone-5.1.0-linux-x86_64
-    ./python.sh /path/to/capture_scene.py --config /path/to/capture_config.yaml
+    ./python.sh /path/to/capture_scene.py --config /path/to/config.yaml
 """
 
 import argparse

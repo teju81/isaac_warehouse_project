@@ -1,0 +1,309 @@
+# =============================================================================
+# Isaac Warehouse Project — Unified Configuration
+# =============================================================================
+# Single config file for all project scripts:
+#   spawn_warehouse.py, nav2_sim_launcher.py, capture_scene.py,
+#   generate_voxel_map.py
+#
+# Usage (Isaac Sim host):
+#   cd ~/isaac-sim/isaac-sim-standalone-5.1.0-linux-x86_64
+#   ./python.sh /path/to/spawn_warehouse.py --config /path/to/config.yaml
+#   ./python.sh /path/to/nav2_sim_launcher.py --config /path/to/config.yaml
+#
+# Teleop (from ROS 2 container):
+#   export ROS_DOMAIN_ID=47
+#   ros2 launch teleop_twist_joy teleop-launch.py joy_vel:=/explorer/cmd_vel
+# =============================================================================
+
+# --- Scene ---
+scene:
+  warehouse: full_warehouse    # warehouse, full_warehouse, warehouse_with_forklifts, warehouse_multiple_shelves
+
+  # Warehouse environment USD paths (relative to assets root)
+  warehouse_paths:
+    warehouse: /Isaac/Environments/Simple_Warehouse/warehouse.usd
+    full_warehouse: /Isaac/Environments/Simple_Warehouse/full_warehouse.usd
+    warehouse_with_forklifts: /Isaac/Environments/Simple_Warehouse/warehouse_with_forklifts.usd
+    warehouse_multiple_shelves: /Isaac/Environments/Simple_Warehouse/warehouse_multiple_shelves.usd
+
+  # Additional objects to populate the scene
+  # Each object: usd_path (relative to assets root), prim name, position [x,y,z], orientation [rx,ry,rz] degrees
+  objects:
+    # Pallets
+    - usd_path: /Isaac/Props/Pallet/pallet.usd
+      prim_name: pallet_01
+      position: [3.0, 1.0, 0.0]
+      orientation: [0, 0, 0]
+    - usd_path: /Isaac/Props/Pallet/pallet.usd
+      prim_name: pallet_02
+      position: [3.0, 3.0, 0.0]
+      orientation: [0, 0, 45]
+    - usd_path: /Isaac/Props/Pallet/pallet.usd
+      prim_name: pallet_03
+      position: [-2.0, 5.0, 0.0]
+      orientation: [0, 0, 90]
+
+    # KLT bins on pallets
+    - usd_path: /Isaac/Props/KLT_Bin/small_KLT.usd
+      prim_name: klt_bin_01
+      position: [3.0, 1.0, 0.2]
+      orientation: [0, 0, 0]
+    - usd_path: /Isaac/Props/KLT_Bin/small_KLT.usd
+      prim_name: klt_bin_02
+      position: [3.2, 1.0, 0.2]
+      orientation: [0, 0, 0]
+    - usd_path: /Isaac/Props/KLT_Bin/small_KLT.usd
+      prim_name: klt_bin_03
+      position: [3.0, 3.0, 0.2]
+      orientation: [0, 0, 30]
+
+    # Dolly
+    - usd_path: /Isaac/Props/Dolly/dolly.usd
+      prim_name: dolly_01
+      position: [-3.0, 0.0, 0.0]
+      orientation: [0, 0, 0]
+
+    # YCB objects (scattered on shelves / floor)
+    - usd_path: /Isaac/Props/YCB/Axis_Aligned_Physics/003_cracker_box.usd
+      prim_name: cracker_box
+      position: [1.0, -1.0, 0.8]
+      orientation: [0, 0, 0]
+    - usd_path: /Isaac/Props/YCB/Axis_Aligned_Physics/004_sugar_box.usd
+      prim_name: sugar_box
+      position: [1.2, -1.0, 0.8]
+      orientation: [0, 0, 15]
+    - usd_path: /Isaac/Props/YCB/Axis_Aligned_Physics/005_tomato_soup_can.usd
+      prim_name: soup_can
+      position: [1.4, -1.0, 0.8]
+      orientation: [0, 0, 0]
+    - usd_path: /Isaac/Props/YCB/Axis_Aligned_Physics/006_mustard_bottle.usd
+      prim_name: mustard_bottle
+      position: [1.6, -1.0, 0.8]
+      orientation: [0, 0, -20]
+
+    # # Mugs
+    # - usd_path: /Isaac/Props/Mugs/SM_Mug_A2.usd
+    #   prim_name: mug_01
+    #   position: [2.0, -2.0, 0.8]
+    #   orientation: [0, 0, 0]
+    # - usd_path: /Isaac/Props/Mugs/SM_Mug_B1.usd
+    #   prim_name: mug_02
+    #   position: [2.2, -2.0, 0.8]
+    #   orientation: [0, 0, 45]
+
+    # Colored blocks
+    - usd_path: /Isaac/Props/Blocks/red_block.usd
+      prim_name: red_block
+      position: [0.0, 2.0, 0.8]
+      orientation: [0, 0, 0]
+    - usd_path: /Isaac/Props/Blocks/blue_block.usd
+      prim_name: blue_block
+      position: [0.2, 2.0, 0.8]
+      orientation: [0, 0, 0]
+    - usd_path: /Isaac/Props/Blocks/green_block.usd
+      prim_name: green_block
+      position: [0.4, 2.0, 0.8]
+      orientation: [0, 0, 0]
+    - usd_path: /Isaac/Props/Blocks/yellow_block.usd
+      prim_name: yellow_block
+      position: [0.6, 2.0, 0.8]
+      orientation: [0, 0, 0]
+
+    # Cabinet
+    - usd_path: /Isaac/Props/Sektion_Cabinet/sektion_cabinet_visuals.usd
+      prim_name: cabinet_01
+      position: [-11.0, -6.0, 0.0]
+      orientation: [0, 0, 0]
+
+    # Forklift (parked)
+    - usd_path: /Isaac/Props/Forklift/forklift.usd
+      prim_name: forklift_01
+      position: [-9.0, -4.0, 0.0]
+      orientation: [0, 0, 180]
+
+# --- Robots ---
+# Spawn info, sensors, and control for each robot.
+# Previously hardcoded in spawn_warehouse.py.
+robots:
+  anymal_d:
+    usd_path: /Isaac/Robots/ANYbotics/anymal_d/anymal_d.usd
+    prim_path: /World/Robots/ANYmalD
+    position: [2.0, 0.0, 0.5]
+    orientation: [0.0, 0.0, 0.0]       # euler degrees
+    namespace: anymal
+    type: legged
+    base_link: base
+    camera:
+      parent_link: base
+      local_position: [0.35, 0.0, 0.05]
+      focal_length: 24.0
+    lidar_3d:
+      parent_prim: /World/Robots/ANYmalD/base
+      local_position: [0.0, 0.0, 0.15]
+      config: Example_Rotary
+      frame_id: base_lidar
+    imu:
+      parent_prim: /World/Robots/ANYmalD/base
+      frame_id: base
+
+  unitree_g1:
+    usd_path: /Isaac/Robots/Unitree/G1/g1.usd
+    prim_path: /World/Robots/UnitreeG1
+    position: [4.0, 2.0, 1.0]
+    orientation: [0.0, 0.0, 90.0]
+    namespace: g1
+    type: legged
+    base_link: pelvis
+    camera:
+      parent_link: torso_link
+      local_position: [0.15, 0.0, 0.0]
+      focal_length: 24.0
+    lidar_3d:
+      parent_prim: /World/Robots/UnitreeG1/torso_link
+      local_position: [0.0, 0.0, 0.1]
+      config: Example_Rotary
+      frame_id: torso_lidar
+    imu:
+      parent_prim: /World/Robots/UnitreeG1/pelvis
+      frame_id: pelvis
+
+  nova_carter:
+    usd_path: /Isaac/Robots/NVIDIA/NovaCarter/nova_carter.usd
+    prim_path: /World/Robots/NovaCarter
+    position: [0.0, -2.0, 0.0]
+    orientation: [0.0, 0.0, 0.0]
+    namespace: carter
+    type: wheeled
+    base_link: chassis_link
+    camera:
+      parent_link: chassis_link
+      local_position: [0.3, 0.0, 0.15]
+      focal_length: 24.0
+    lidar_3d:
+      parent_prim: /World/Robots/NovaCarter/chassis_link
+      local_position: [-0.364, 0.0, 0.228]
+      config: Example_Rotary
+      frame_id: rear_lidar
+    lidar_2d:
+      parent_prim: /World/Robots/NovaCarter/chassis_link
+      local_position: [0.0, 0.0, 0.245]
+      config: Example_Rotary_2D
+      frame_id: front_2d_lidar
+    imu:
+      parent_prim: /World/Robots/NovaCarter/chassis_link
+      frame_id: chassis_link
+    drive:
+      wheel_radius: 0.04295
+      wheel_base: 0.4132
+      wheel_joint_names: [joint_wheel_left, joint_wheel_right]
+
+  quadcopter:
+    usd_path: /Isaac/Robots/IsaacSim/Quadcopter/quadcopter.usd
+    prim_path: /World/Robots/Quadcopter
+    position: [0.0, 4.0, 2.0]
+    orientation: [0.0, 0.0, 0.0]
+    namespace: drone
+    type: multirotor
+    camera:
+      parent_link: chassis
+      local_position: [0.1, 0.0, -0.02]
+      focal_length: 18.0
+    imu:
+      parent_prim: /World/Robots/Quadcopter/chassis
+      frame_id: chassis
+
+  explorer_camera:
+    prim_path: /World/Robots/ExplorerCam
+    position: [0.0, 0.0, 3.0]
+    orientation: [0.0, 0.0, 0.0]
+    namespace: explorer
+    type: floating_camera
+    base_link: body
+    camera:
+      parent_link: body
+      local_position: [0.0, 0.0, 0.0]
+      focal_length: 18.0
+
+# --- Fixed Cameras ---
+# Surveillance / monitoring cameras at fixed positions in the warehouse.
+# Previously hardcoded in spawn_warehouse.py.
+fixed_cameras:
+  - name: overhead_cam_1
+    prim_path: /World/Cameras/overhead_cam_1
+    position: [0.0, 0.0, 8.0]
+    target: [0.0, 0.0, 0.0]
+    focal_length: 18.0
+    resolution: [1280, 720]
+  - name: corner_cam_1
+    prim_path: /World/Cameras/corner_cam_1
+    position: [10.0, 8.0, 5.0]
+    target: [0.0, 0.0, 0.0]
+    focal_length: 24.0
+    resolution: [1280, 720]
+  - name: entrance_cam
+    prim_path: /World/Cameras/entrance_cam
+    position: [-5.0, 0.0, 4.0]
+    target: [2.0, 0.0, 0.0]
+    focal_length: 35.0
+    resolution: [1920, 1080]
+
+# --- Camera (explorer / capture) ---
+camera:
+  width: 1920
+  height: 1080
+  focal_length: 18.0          # mm (used to compute fx/fy from sensor aperture)
+  fx: null                    # pixels — null = auto from focal_length
+  fy: null
+  cx: null                    # pixels — null = width / 2
+  cy: null                    # pixels — null = height / 2
+  horizontal_aperture: 20.955 # mm (standard Isaac Sim default)
+  vertical_aperture: 15.2908  # mm
+  near_plane: 0.01            # meters
+  far_plane: 100.0            # meters
+  initial_pose:
+    tx: 0.0
+    ty: 0.0
+    tz: 3.0
+    roll: 0.0                 # degrees
+    pitch: 0.0
+    yaw: 0.0
+
+# --- Recording ---
+recording:
+  output_dir: /home/raviteja/mycode/ubuntu_data/code_outputs/warehouse_001
+  subdir_color: color
+  subdir_depth: depth
+  capture_rate: 5.0           # Hz — frames captured per second
+  depth_format: both          # npy, png, or both
+  depth_scale: 1000           # for uint16 PNG: 1000 = millimeters
+
+# --- Voxel Map Generation ---
+voxel_map:
+  # output_dir: /home/raviteja/mycode/ubuntu_data/code_outputs/warehouse_001/voxel_map
+  output_dir: /home/raviteja/mycode/isaac_warehouse_project/ros2_ws/src/nav2_sandbox/maps # Store directly in the nav2 sandbox to avoid copy paste
+  resolution: 0.1              # Voxel edge length (meters)
+  height_range: [-0.5, 8.5]   # Z range to voxelize (meters)
+  padding: 0.5                 # Padding around scene bounds (meters)
+
+  # Output files (relative to output_dir unless absolute)
+  voxel_npz: voxel_map.npz     # 3D occupancy grid
+  mesh_ply: scene_mesh.ply      # Scene triangle mesh for Blender
+  voxel_ply: voxel_grid.ply     # Voxel point cloud for Blender
+
+  # Nav2 2D occupancy grid (null = skip)
+  nav2_map: map                 # Base name -> map.pgm + map.yaml
+  nav2_height_range: [0.0, 1.5] # Z range for 2D projection (robot height)
+
+# --- Teleop ---
+teleop:
+  namespace: explorer
+  domain_id: 47
+  max_speed: 3.0              # m/s
+  max_yaw_rate: 1.5           # rad/s
+
+# --- Nav2 (used by nav2_sim_launcher.py) ---
+# Change 'robot' to switch: nova_carter, unitree_g1, anymal_d
+# GT odom topic is derived from the robot's namespace: /<ns>/ground_truth/odom
+nav2:
+  robot: nova_carter
+  domain_id: 47
